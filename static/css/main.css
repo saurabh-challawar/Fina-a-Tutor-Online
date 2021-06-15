@@ -1,0 +1,13 @@
+.fa{
+	margin-right: 5px;
+}
+
+.hidden{
+	display: none!important;
+}
+#subjects{
+	font-size: medium;
+}
+.card-learnBtn{
+	float: bottom;
+}

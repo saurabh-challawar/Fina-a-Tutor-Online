@@ -1,0 +1,59 @@
+{%  extends 'tutor/main.html' %}
+{% load static %}
+{% block content %}
+{% load tutor_tags %}
+    <div class="row">
+    {% for favourite in favourites %}
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                <div class="card" style="width: 18rem;margin: 10px;alignment: center;height: 515px;">
+                  <img src="{% static favourite.tutor.userInfo.imageURL %}" class="card-img-top" alt="{{ tutor.imageURL }}"  style=" width: 286px; height:180px; object-fit: contain;">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ favourite.tutor.userInfo.name }}
+                        <small style="float: right">{{ favourite.tutor.favourite_set.count }}</small>
+                        {% if request.user.is_authenticated %}
+                        <script>
+                           var x = {% isFavourite request favourite.tutor %}
+                            console.log(x)
+                           if(x == 1) {
+                               document.write( "<i class='fa fa-star favStars' data-tutor='{{ favourite.tutor.id }}' data-action= 'unFavourite' style='float: right; color: orange' '></i>")
+                           }
+                           else {
+                              document.write( "<i class='fa fa-star-o favStars' data-tutor='{{ favourite.tutor.id }}' data-action= 'favourite' style='float: right;' '></i>")
+                           }
+                        </script>
+                        {% else %}
+                            <a href="{% url 'login' %}"><i class="fa fa-star-o" style="float: right; color: black;"></i></a>
+                        {% endif %}
+                        <hr>
+                        <p id="subjects">{{ favourite.tutor.subjects }}</p>
+                        {% if favourite.tutor.twitter_link %}
+                            <a href="{{ favourite.tutor.twitter_link }}"><i class="fa fa-twitter"></i></a>
+                        {% endif %}
+                        {% if favourite.tutor.facebook_link %}
+                            <a href="{{ favourite.tutor.facebook_link }}"><i class="fa fa-facebook"></i></a>
+                        {% endif %}
+                        {% if favourite.tutor.instagram_link %}
+                            <a href="{{ favourite.tutor.instagram_link }}"><i class="fa fa-instagram"></i></a>
+                        {% endif %}
+                        {% if favourite.tutor.github_link %}
+                            <a href="{{ favourite.tutor.github_link }}"><i class="fa fa-github"></i></a>
+                        {% endif %}
+                        {% if favourite.tutor.linkedin_link %}
+                            <a href="{{ favourite.tutor.linkedin_link }}"><i class="fa fa-linkedin"></i></a>
+                        {% endif %}
+                        {% if favourite.tutor.youtube_link %}
+                            <a href="{{ favourite.tutor.youtube_link }}"><i class="fa fa-youtube-play"></i></a>
+                        {% endif %}
+
+
+
+                    </h5>
+                    <p class="card-text">{{ favourite.tutor.bio }}</p>
+                  <a href="{% url 'detail' favourite.tutor.id %}" class="btn btn-primary card-learnBtn">Learn More</a>
+                  </div>
+
+                </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock content %}

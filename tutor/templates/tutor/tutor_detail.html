@@ -1,0 +1,125 @@
+{%  extends 'tutor/main.html' %}
+{% load static %}
+{% block content %}
+    <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                  <div class="card">
+                  <img src="{% static tutor.userInfo.imageURL %}" class="card-img-top" alt="{{ tutor.imageURL }}">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ tutor.userInfo.name }}
+{#                        <span class="stars">#}
+{#                            <i class="fa fa-star-o" id="plain-star" style="float: right"  onclick="favourite()"></i>#}
+{#                            <i class="fa fa-star" id="orange-star" style="float: right; color: orange" onclick="unFavourite()"></i>#}
+{#                        </span>#}
+                        <hr>
+                        <p id="subjects">{{ tutor.subjects }}</p>
+                        <br>
+                        {% if tutor.twitter_link %}
+                            <a href="{{ tutor.twitter_link }}"><i class="fa fa-twitter"></i></a>
+                        {% endif %}
+                        {% if tutor.facebook_link %}
+                            <a href="{{ tutor.facebook_link }}"><i class="fa fa-facebook"></i></a>
+                        {% endif %}
+                        {% if tutor.instagram_link %}
+                            <a href="{{ tutor.instagram_link }}"><i class="fa fa-instagram"></i></a>
+                        {% endif %}
+                        {% if tutor.github_link %}
+                            <a href="{{ tutor.github_link }}"><i class="fa fa-github"></i></a>
+                        {% endif %}
+                        {% if tutor.linkedin_link %}
+                            <a href="{{ tutor.linkedin_link }}"><i class="fa fa-linkedin"></i></a>
+                        {% endif %}
+                        {% if tutor.youtube_link %}
+                            <a href="{{ tutor.youtube_link }}"><i class="fa fa-youtube-play"></i></a>
+                        {% endif %}
+                    </h5>
+                    <p class="card-text">{{ tutor.bio }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8" style="height: fit-content">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">About</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ tutor.about }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Subjects</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ tutor.subjects }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ tutor.userInfo.email }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ tutor.phone }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Curriculam Vitae</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <a href="{% static tutor.cvURL %}" class="btn btn-outline-primary" target="_blank">CV</a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+                <h5>Comments</h5>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="media">
+                              <img style="height: 100px;width: 100px; object-fit: contain" src="{% static current_user.imageURL %}" class="mr-3" alt="...">
+                              <div class="media-body">
+                                <h5 class="mt-0">{{ current_user.user.username }}</h5>
+                                {{ comment_form.text }}
+                                <input type="submit" value="Post">
+                              </div>
+                            </div>
+                        </div>
+                    </form>
+                    {% for comment in comments %}
+                    <hr>
+                    <div class="row">
+                        <div class="media">
+                          <img style="height: 100px;width: 100px; object-fit: contain" src="{% static comment.owner.imageURL %}" class="mr-3" alt="...">
+                          <div class="media-body">
+                            <h5 class="mt-0">{{ comment.owner.user.username }}</h5>
+                            {{ comment.text }}
+                          </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+          </div>
+    </div>
+
+{% endblock content %}

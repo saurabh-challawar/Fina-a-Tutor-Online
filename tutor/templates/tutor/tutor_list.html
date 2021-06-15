@@ -1,0 +1,106 @@
+{%  extends 'tutor/main.html' %}
+{% load static %}
+{% block content %}
+{% load tutor_tags %}
+
+    <div class="row">
+    {% for tutor in tutors %}
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                <div class="card" style="width: 18rem;margin: 10px;alignment: center;height: 515px;">
+                  <img src="{% static tutor.userInfo.imageURL %}" class="card-img-top" alt="{{ tutor.imageURL }}"  style=" width: 286px; height:180px; object-fit: contain;">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ tutor.userInfo.name }}
+                        <small style="float: right">{{ tutor.favourite_set.count }}</small>
+                        {% if request.user.is_authenticated %}
+                        <script>
+                           var x = {% isFavourite request tutor %}
+                            console.log(x)
+                           if(x == 1) {
+                               document.write( "<i class='fa fa-star favStars' data-tutor='{{ tutor.id }}' data-action= 'unFavourite' style='float: right; color: orange' '></i>")
+                           }
+                           else {
+                              document.write( "<i class='fa fa-star-o favStars' data-tutor='{{ tutor.id }}' data-action= 'favourite' style='float: right;' '></i>")
+                           }
+                        </script>
+                        {% else %}
+                            <a href="{% url 'login' %}"><i class="fa fa-star-o" style="float: right; color: black;"></i></a>
+                        {% endif %}
+
+
+
+
+{#                        <span>#}
+{#                        <i class="fa fa-star-o" style="float: right;"></i>#}
+{#                            {% if tutor.favourite_set.complex_filter. %}#}
+{#                                    <i class="fa fa-star" id="orange-star" style="float: right; color: orange" onclick="unFavourite()"></i>#}
+{#                                {% endif %}#}
+{#                        </span>#}
+{#                        {% endif %}#}
+
+                        <hr>
+                        <p id="subjects">{{ tutor.subjects }}</p>
+                        {% if tutor.twitter_link %}
+                            <a href="{{ tutor.twitter_link }}"><i class="fa fa-twitter"></i></a>
+                        {% endif %}
+                        {% if tutor.facebook_link %}
+                            <a href="{{ tutor.facebook_link }}"><i class="fa fa-facebook"></i></a>
+                        {% endif %}
+                        {% if tutor.instagram_link %}
+                            <a href="{{ tutor.instagram_link }}"><i class="fa fa-instagram"></i></a>
+                        {% endif %}
+                        {% if tutor.github_link %}
+                            <a href="{{ tutor.github_link }}"><i class="fa fa-github"></i></a>
+                        {% endif %}
+                        {% if tutor.linkedin_link %}
+                            <a href="{{ tutor.linkedin_link }}"><i class="fa fa-linkedin"></i></a>
+                        {% endif %}
+                        {% if tutor.youtube_link %}
+                            <a href="{{ tutor.youtube_link }}"><i class="fa fa-youtube-play"></i></a>
+                        {% endif %}
+
+
+
+                    </h5>
+                    <p class="card-text">{{ tutor.bio }}</p>
+                  <a href="{% url 'detail' tutor.id %}" class="btn btn-primary card-learnBtn">Learn More</a>
+                  </div>
+
+                </div>
+        </div>
+    {% endfor %}
+    </div>
+{#    <script>#}
+{#    var favourites = document.getElementsByClassName('favStars')#}
+{#console.log(favourites)#}
+{##}
+{#for (var i = 0; i < favourites.length; i++){#}
+{#    favourites[i].addEventListener("click", function (){#}
+{#        console.log('hdhbd')#}
+{#        var tutorId = this.dataset.tutor#}
+{#        var action = this.dataset.action#}
+{#        updateFavs(tutorId, action)#}
+{#    })#}
+{#}#}
+{##}
+{#function updateFavs(tutorId, action){#}
+{#    console.log('in updatefav')#}
+{#    url = '/update_favourites/'#}
+{##}
+{#    fetch(url, {#}
+{#        method : 'POST',#}
+{#        headers: {#}
+{#            'Content-Type': 'application/json',#}
+{#            'X-CSRFToken': csrftoken,#}
+{#        },#}
+{#        body: JSON.stringify({'tutorId': tutorId, 'action': action})#}
+{#    })#}
+{#        .then((response)=>{#}
+{#            return response.json()#}
+{#        })#}
+{#        .then((data) =>{#}
+{#        console.log('data: ', data)#}
+{#        location.reload()#}
+{#    })#}
+{#}#}
+{#    </script>#}
+{% endblock content %}
